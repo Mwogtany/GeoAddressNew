@@ -1,0 +1,39 @@
+﻿@if (Request.IsAuthenticated)
+{
+<div class="row">
+    <form id="logoutForm" action="~/Account/Logout" method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li><span class="navbar-brand">Welcome @User.Identity.Name !!</span></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    </form>
+</div>
+}
+<div class="jumbotron">
+    <h1>Farm Geo-Addressing System</h1>
+    <p class="lead">By using of Google's Map, this platform generates a Plus Code for your farm or facilities around. 
+    By Capturing your details, it will help in agricultural planning, support and linkage to appropriate market for 
+    your produce</p>
+    <p><a href="~/home/WhatIsPluscode" class="btn btn-primary btn-lg">Learn how it works &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>To use this application, you have to register and login. Once in the platform, you are able
+        to add your own records by capturing of your household and farm details. This Farm Geo-Addressing
+        once operational will help in location and distribution of farm goods and services.</p>
+        <p><a class="btn btn-default" href="~/Account/Register">Register if New &raquo;</a><a class="btn btn-default" href="~/Account/Login">Login &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>API Integration</h2>
+        <p>Incase you want an integration to your application to be able to capture Geo-Location of objects or assets,
+        this application has been designed to provide for ease of integration and generation of PlusCode for any location on 
+        Earth service based on Latitude / Longitude pairs.</p>
+        <p><a class="btn btn-default" href="~/Home/Index">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Search Function</h2>
+        <p>You are provide a search functionality to enable you find Geo-Location of any registered PlusCode object in this platform.</p>
+        <p><a class="btn btn-default" href="~/Home/Index">Learn more &raquo;</a></p>
+    </div>
+</div>

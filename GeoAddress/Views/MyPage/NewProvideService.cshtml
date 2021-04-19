@@ -1,0 +1,190 @@
+﻿@model GeoAddress.Models.ProvideServiceViewModel
+
+@{
+    ViewBag.Title = "My Services Provided";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+<h2>My Services Provided to Community</h2>
+
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootbox.all.min.js"></script>
+@Html.ActionLink("Back", "Index", "MyPage")
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="mymessage text-success"></div>
+        @if (ViewBag.Message != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message</div>
+            </p>}
+        @if (ViewBag.Message2 != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message2</div>
+            </p>
+        }
+
+        @Html.HiddenFor(x => x.ProviderID)
+        @Html.HiddenFor(x => x.userid)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.category_id, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.category_id, Model.CategoryList, "--Select--", new { @id = "ddlCategory", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ServiceID, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.ServiceID, Model.ServiceList, "--Select--", new { @id = "ddlService", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ServiceID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profession, htmlAttributes: new { @class = "control-label text-left col-md-6" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Profession, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Profession, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Qualification, htmlAttributes: new { @class = "control-label text-left col-md-6" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Qualification, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Qualification, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ServiceDescription, htmlAttributes: new { @class = "control-label text-left col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(model => model.ServiceDescription, 5, 45, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ServiceDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <p>
+            <h4>CURRENT SERVICES</h4>
+        </p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Service Category</th>
+                    <th>Service Type</th>
+                    <th>Description</th>
+                    <th>Profession</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.ServicesProvidedList != null)
+                {
+                    foreach (var item in Model.ServicesProvidedList)
+                    {
+                        if (item != null)
+                        {
+                            <tr>
+                                <th scope="row">@item.ProviderID</th>
+                                <td>@item.CategoryDescription</td>
+                                <td>@item.Description</td>
+                                <td>@item.ServiceDescription</td>
+                                <td>@item.Profession</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "NewProvideService", "MyPage", new { id = item.ProviderID }, null)
+                                    <a href="#" onclick="deleteSession(@item.ProviderID)" id="btnDelete" data-target="#deleteModal" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        Page Information Here<<Page 1>>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+                $('#ddlCategory').change(function () {
+                    var selcategory = $(this).val();
+                    $.getJSON("../../api/Cascade/FarmerServices/" + selcategory,
+                        function (classesData) {
+                            var select = $("#ddlService");
+                            select.empty();
+                            select.append($('<option/>', {
+                                value: 0,
+                                text: "<<Select Service>>"
+                            }));
+                            $.each(classesData, function (index, itemData) {
+                                select.append($('<option/>', {
+                                    value: itemData.id,
+                                    text: itemData.Description
+                                }));
+                            });
+                        });
+                });
+
+            });
+
+        function deleteSession(stid) {
+            bootbox.confirm("Are you sure you want to delete Farmer Service ID: " + stid + "?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DelProvideService", "MyPage")",
+                        type: 'POST',
+                        data: JSON.stringify({ id: stid }), //small letter id, same as in controller parameter
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (customer) {
+                            if (customer != null) {
+                                window.location.href = '/MyPage/NewProvideService/0'
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+}

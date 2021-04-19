@@ -1,0 +1,187 @@
+﻿@model GeoAddress.Models.FarmerViewModel6
+
+@{
+    ViewBag.Title = "Farm Aquaculture";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+@Html.Partial("PartialFarmerMenu")
+
+<h2>SECTION G: AQUACULTURE (Edit)</h2>
+<div class="row">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (ViewBag.Message != "")
+            {
+                <p>
+                    <div class="text-success">@ViewBag.Message</div>
+                </p>}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AquacultureType, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelAquacultureTypeList, Model.AquacultureTypeList, "None Selected", new { @id = "DDLTypes", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.AquacultureType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AquacultureInputs, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelAquacultureInputsList, Model.AquacultureInputsList, "None Selected", new { @id = "DDLInput", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.AquacultureInputs, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FertilizerPonds, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.RadioButtonFor(model => model.FertilizerPonds, true) Yes
+                            @Html.RadioButtonFor(model => model.FertilizerPonds, false) No
+                            @Html.ValidationMessageFor(model => model.FertilizerPonds, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AquacultureLevel, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelAquacultureLevelList, Model.AquacultureLevelList, "None Selected", new { @id = "DDLInput", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.AquacultureLevel, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="SAVE" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <p>
+                @Html.ActionLink("Add / Edit Aquaculture Production System", "AddAquacultureProd", "Farmer", new { id = 0 }, null)
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Production System</th>
+                        <th>Active Units</th>
+                        <th>Active Area/Volume</th>
+                        <th>In-Active Units</th>
+                        <th>In-Active Area/Volume</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.FarmerAquaProdSysList != null)
+                    {
+                        foreach (var item in Model.FarmerAquaProdSysList)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <th scope="row">@item.ProductID</th>
+                                    <td>@item.ProductSystem</td>
+                                    <td>@item.ActiveUnits</td>
+                                    <td>@item.Area_Volume</td>
+                                    <td>@item.InactiveUnits</td>
+                                    <td>@item.InAcArea_Volume</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <p>
+                @Html.ActionLink("Add / Edit Aquaculture Species", "AddAquacultureSpecies", "Farmer", new { id = 0, pid = 0}, null)
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Species</th>
+                        <th>Production System</th>
+                        <th>Fingerlings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.FarmerAquaSpeciesList != null)
+                    {
+                        foreach (var item in Model.FarmerAquaSpeciesList)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <th scope="row">@item.SpeciesID</th>
+                                    <td>@item.SpeciesDescription</td>
+                                    <td>@item.ProductSystem</td>
+                                    <td>@item.Fingerlings</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <head runat="server">
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript">
+
+        $(function () {
+            $('.selmultiple').multiselect({
+                includeSelectAllOption: true,
+                selectAllValue: 'multiselect-all',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: '300',
+                buttonWidth: '235',
+            });
+        });
+
+        </script>
+    </head>
+}

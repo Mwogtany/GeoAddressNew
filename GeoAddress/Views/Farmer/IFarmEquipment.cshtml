@@ -1,0 +1,136 @@
+﻿@model GeoAddress.Models.FarmerViewModel7
+
+@{
+    ViewBag.Title = "Farm Equipment";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+@Html.Partial("PartialFarmerMenu")
+
+<h2>SECTION H: FARM MECHANIZATION AND ASSETS (Edit)</h2>
+<div class="col-md-6">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (ViewBag.Message != "")
+            {
+                <p>
+                    <div class="text-success">@ViewBag.Message</div>
+                </p>}
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PowerSource, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.PowerSource, Model.PowerSourceList, "None Selected", new { @id = "DDLPower", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PowerSource, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FarmLaborSource, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.FarmLaborSource, Model.FarmLaborSourceList, "None Selected", new { @id = "DDLLabor", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FarmLaborSource, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FarmStructures, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SelFarmStructuresList, Model.FarmStructuresList, "None Selected", new { @id = "DDLStruct", @class = "form-control selmultiple", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.FarmStructures, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FarmEquipmentOwner, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.FarmEquipmentOwner, Model.FarmEquipmentOwnerList, "None Selected", new { @id = "DDLOwner", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FarmEquipmentOwner, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="SAVE" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="col-md-6">
+    <div class="row">
+        <p>
+            <h3>Main Types of Farm Equipment and Machinery in use</h3>
+        </p>
+        <p>
+            @Html.ActionLink("Add / Edit Equipment List", "AddFarmEquipment", "Farmer", new { id = 0 }, null)
+        </p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Equipment</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.FarmerEquipmentlist != null)
+                {
+                    foreach (var item in Model.FarmerEquipmentlist)
+                    {
+                        if (item != null)
+                        {
+                            <tr>
+                                <th scope="row">@item.EquipID</th>
+                                <td>@item.Equipment</td>
+                                <td>@item.Qty</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        Page Information Here<<Page 1>>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <head runat="server">
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript">
+
+        $(function () {
+            $('.selmultiple').multiselect({
+                includeSelectAllOption: true,
+                selectAllValue: 'multiselect-all',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: '300',
+                buttonWidth: '235',
+            });
+        });
+
+        </script>
+    </head>
+}

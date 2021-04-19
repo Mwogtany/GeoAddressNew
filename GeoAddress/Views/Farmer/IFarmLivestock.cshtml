@@ -1,0 +1,109 @@
+﻿@model GeoAddress.Models.FarmerViewModel5
+
+@{
+    ViewBag.Title = "Farm Livestock";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/Scripts/Custom/bootstrap-multiselect.js"></script>
+<script type="text/javascript">
+
+        $(function () {
+            $('#DDLProdSys').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+</script>
+
+@Html.Partial("PartialFarmerMenu")
+
+<h2>SECTION F: LIVESTOCK (Edit)</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <p>
+                @Html.ActionLink("Add / Edit Livestock", "AddLivestock", "Farmer", new { id = 0 }, null)
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Livestock</th>
+                        <th>Production System</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.LivestockList != null)
+            {
+                foreach (var item in Model.LivestockList)
+                {
+                    if (item != null)
+                    {
+                                <tr>
+                                    <th scope="row">@item.LivestockID</th>
+                                    <td>@item.Livestock</td>
+                                    <td>@item.ProductionSystem</td>
+                                    <td>@item.Stock</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-4">
+        <div class="row">
+            <p>
+                @Html.ActionLink("Add / Edit Feeds", "AddLivestockFeed", "Farmer", new { id = 0 }, null)
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Feed</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.LivestockFeedsList != null)
+            {
+                foreach (var item in Model.LivestockFeedsList)
+                {
+                    if (item != null)
+                    {
+                                <tr>
+                                    <th scope="row">@item.FeedID</th>
+                                    <td>@item.FeedDescription</td>
+                                    <td>@item.Quantity</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@model GeoAddress.Models.MyRecordsViewModel
+
+@if (Model.FarmersPrevService > 0)
+{
+    <div class="col-md-12">
+        <p>
+            <a href="/MyPage/NewFarmerService">
+                <h3>View Concluded Services</h3>
+            </a>
+            <div class="MyFarmerCurService">List of Current Services Shown Here!!!</div>
+        </p>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+        <p>
+            <h4>No Previous Services for Display</h4>
+        </p>
+    </div>
+}
+
+

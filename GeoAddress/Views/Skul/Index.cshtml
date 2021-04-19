@@ -1,0 +1,91 @@
+﻿@model IEnumerable<GeoAddress.Models.SkulViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+    int i = 1;
+}
+
+<h2>Geo-Addresses for Educational and Training Institutions</h2>
+@*<p>User: @Session["user"]</p>*@
+<p>
+    @Html.ActionLink("Add an Institution", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ##
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pluscode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NEMIS_CODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.INSTITUTION_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Constituency_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sub_County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ward_Code)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @i
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pluscode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NEMIS_CODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.INSTITUTION_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Constituency_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sub_County_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ward_Code)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.BaseID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.BaseID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BaseID })
+        </td>
+    </tr>
+        i++;
+    }
+
+</table>

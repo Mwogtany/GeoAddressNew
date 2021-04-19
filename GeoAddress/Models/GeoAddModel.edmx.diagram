@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="53a2a5ab26cd40c0a63f57b92801526e" Name="Diagram1" ZoomLevel="65">
+        <EntityTypeShape EntityType="KEGooglePlusModel.BaseTable" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.BUSINESS" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.CONSTITUENCY" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.COUNTY" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_ANIMAL_FEEDS" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_AQUACULTURE" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_AQUACULTURE_PRODSYS" Width="1.5" PointX="6.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_CROPS" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_EQUIPMENT" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_LIVESTOCK" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.HEALTH_FACILITY" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.HOUSEHOLD" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.Login" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.SCHOOL" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_AGRICULTURE_CATEGORY" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_AGRICULTURE_ITEM" Width="1.5" PointX="10.75" PointY="7.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_AGRICULTURE_TYPE" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_CROPS" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_AQUACULTURE_PRODSYS" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_AQUACULTURE_SPECIES" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_CATEGORYGROUPS" Width="1.5" PointX="12.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_CROP_CHEMICAL_USE" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_EQUIPMENT" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_FARMSTRUCTURE" Width="1.5" PointX="6.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_FEEDS" Width="1.5" PointX="8.75" PointY="13.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_FERTILIZER" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_FINANCESERVICES" Width="1.5" PointX="14.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_FINANCIALS" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_GROUPS" Width="1.5" PointX="14.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LAND_REGISTRATION" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LANDPRACTICE" Width="1.5" PointX="10.75" PointY="15.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LEGAL_STATUS" Width="1.5" PointX="12.75" PointY="15.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LIVESTOCK_PRODSYS" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LIVESTOCK_SPECIES" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_POWERSOURCE" Width="1.5" PointX="16.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_PRODUCTION_SYS" Width="1.5" PointX="4.75" PointY="16.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_WATERSOURCE" Width="1.5" PointX="16.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_HOSPITAL_LEVEL" Width="1.5" PointX="6.75" PointY="16.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_HOUSEHOLD_GENDER" Width="1.5" PointX="16.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_HOUSEHOLD_MARITAL" Width="1.5" PointX="16.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_HOUSEHOLD_TYPE" Width="1.5" PointX="16.75" PointY="15.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_REGISTER_QUESTION" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_SCHOOL_LEVEL" Width="1.5" PointX="18.75" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_TRAFFIC_DEFINITION" Width="1.5" PointX="18.75" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.SUB_COUNTY" Width="1.5" PointX="8.75" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.TRAFFIC" Width="1.5" PointX="18.75" PointY="9.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.UserRoleAssignment" Width="1.5" PointX="10.75" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.WARD" Width="1.5" PointX="18.75" PointY="12.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Farmer_Crops" Width="1.5" PointX="13.375" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Livestock_Stock" Width="1.5" PointX="15.375" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Aquaculture_ProductionSystem" Width="1.5" PointX="17.75" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Aquaculture_Species" Width="1.5" PointX="0.75" PointY="19.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_AQUACULTURE_INPUTS" Width="1.5" PointX="3.375" PointY="19.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_AQUACULTURE_LEVELS" Width="1.5" PointX="5.375" PointY="19.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_AQUACULTURE_TYPES" Width="1.5" PointX="19.375" PointY="15.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_LIVESTOCK_FEEDS" Width="1.5" PointX="20.375" PointY="18.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Livestock_Feeds" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Farmer_Equipment_Qty" Width="1.5" PointX="21.375" PointY="3.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_EQUIPMENTOWNER" Width="1.5" PointX="21.375" PointY="6.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_LABORSOURCE" Width="1.5" PointX="7.375" PointY="21.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER" Width="1.5" PointX="2.75" PointY="4.125" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_EXTENSIONPROVIDER" Width="1.5" PointX="0.5" PointY="7.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_INFO_SOURCEGAP" Width="1.5" PointX="0.5" PointY="10.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_INFOMEDIA" Width="1.5" PointX="0.5" PointY="13.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_IRRIGATIONBODY" Width="1.5" PointX="0.5" PointY="16.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_IRRIGATIONTYPES" Width="1.5" PointX="21.5" PointY="9.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_PREFERREDADVISORYLANGUAGE" Width="1.5" PointX="21.5" PointY="12.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_PREFERREDADVISORYPERIOD" Width="1.5" PointX="21.5" PointY="15.5" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_IRRIGATIONPROJECT" Width="1.5" PointX="20.375" PointY="21.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Businesses" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Farmers" Width="1.5" PointX="2.75" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_HouseHolds" Width="1.5" PointX="4.75" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Schools" Width="1.5" PointX="9.75" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Hospitals" Width="1.5" PointX="12.375" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_SERVICE_REQUEST" Width="1.5" PointX="14.375" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_SERVICES" Width="1.5" PointX="16.375" PointY="22.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.STATIC_FARMER_SERVICES_CATEGORY" Width="1.5" PointX="22.375" PointY="17.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Farmer_Service_Requests" Width="1.5" PointX="22.375" PointY="20.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Farmer_Services_Done" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.FARMER_SERVICE_REQUEST_DONE" Width="1.5" PointX="23.375" PointY="4.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.SERVICE_PROVIDER" Width="1.5" PointX="24.375" PointY="8.75" />
+        <EntityTypeShape EntityType="KEGooglePlusModel.vw_Service_Provider" Width="1.5" PointX="24.375" PointY="12.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

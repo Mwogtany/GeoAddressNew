@@ -1,0 +1,134 @@
+﻿@model GeoAddress.Models.FarmerLivestockViewModel
+@{
+    ViewBag.Title = "Add Livestock";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootbox.all.min.js"></script>
+<h2>Add Livestock</h2>
+@Html.ActionLink("Back", "IFarmLivestock", "Farmer", new { id = (int)Session["id"] }, null)
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="mymessage text-success"></div>
+        @if (ViewBag.Message != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message</div>
+            </p>}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.BaseID)
+                        @Html.LabelFor(model => model.LivestockID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.LivestockID, Model.Livestocklist, "--Select--", new { @id = "ddlLivestock", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LivestockID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductionID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownListFor(model => model.ProductionID, Model.ProductionSysList, "--Select--", new { @id = "ddlProdSys", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ProductionID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>
+                <h4>LIVESTOCK IN THE FARM</h4>
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Livestock</th>
+                        <th>Production System</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.FarmerLivestockList != null)
+                    {
+                        foreach (var item in Model.FarmerLivestockList)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <th scope="row">@item.LivestockID</th>
+                                    <td>@item.Livestock</td>
+                                    <td>@item.ProductionSystem</td>
+                                    <td>@item.Stock</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "AddLivestock", "Farmer", new { id = item.LivestockID }, null)
+                                        <a href="#" onclick="deleteSession(@item.LivestockID)" id="btnDelete" data-target="#deleteModal" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <script type="text/javascript" language="javascript">
+        function deleteSession(id) {
+            bootbox.confirm("Are you sure you want to delete Livestock ID: " + id + "?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DelLivestock", "Farmer")",
+                        type: 'POST',
+                        data: JSON.stringify({ id: id }), //small letter id, same as in controller parameter
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (customer) {
+                            if (customer != null) {
+                                window.location.href = '/Farmer/AddLivestock/0'
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,123 @@
+﻿@model GeoAddress.Models.FarmerAquacultureSpeciesViewModel
+@{
+    ViewBag.Title = "Add Aquaculture Species";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/bootbox.all.js"></script>
+<h2>Add Aquaculture Species</h2>
+@Html.ActionLink("Back", "IFarmAquaculture", "Farmer", new { id = (int)Session["id"] }, null)
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="mymessage text-success"></div>
+        @if (ViewBag.Message != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message</div>
+            </p>}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.BaseID)
+                    @Html.LabelFor(model => model.SpeciesID, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SpeciesID, Model.AquaSpecieslist, "--Select--", new { @id = "ddlSpecies", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpeciesID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductID, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.ProductID, Model.ProdSyslist, "--Select--", new { @id = "ddlProds", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fingerlings, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Fingerlings, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Fingerlings, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>
+                <h4>AQUACULTURE SPECIES IN THE FARM</h4>
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Species</th>
+                        <th>Production System</th>
+                        <th>Fingerlings</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.FarmerAquaSpecieslist != null)
+                    {
+                        foreach (var item in Model.FarmerAquaSpecieslist)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <th scope="row">@item.SpeciesID</th>
+                                    <td>@item.SpeciesDescription</td>
+                                    <td>@item.ProductSystem</td>
+                                    <td>@item.Fingerlings</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "AddAquacultureSpecies", "Farmer", new { id = item.SpeciesID, pid = item.ProductID }, null)
+                                        <a href="#" onclick="deleteSession(@item.SpeciesID, @item.ProductID)" id="btnDelete" data-target="#deleteModal" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" language="javascript">
+        function deleteSession(id, pid) {
+            bootbox.confirm("Are you sure you want to delete Aquaculture Species (Species ID: " + id + ", Prod. Sys. ID: "+ pid +")?", function (result) {
+                $.ajax({
+                    url: "@Url.Action("DelAquacultureSpecies", "Farmer")",
+                    type: 'POST',
+                    data: JSON.stringify({ id: id, pid : pid }), //small letter id, same as in controller parameter
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (customer) {
+                        if (customer != null) {
+                            window.location.href = '/Farmer/AddAquacultureSpecies/0'
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        }
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@model GeoAddress.Models.MyRecordsViewModel
+@{ 
+    var mycurlist = Model.FarmersCurService;
+}
+
+@if (Model.Farmers > 0)
+{
+    <div class="col-md-12">
+        <p>
+            @Html.ActionLink("Apply for Service", "NewFarmerService", "MyPage", new { id = (int)Session["servid"] }, null)
+        </p>
+        <h3>ACTIVE SERVICES</h3>
+        <p>
+            @Html.Partial("PartialMyService", mycurlist)
+        </p>
+        <h3>PREVIOUS SERVICES</h3>
+        <p>
+            @Html.Partial("PartialMyPrevService", Model)
+        </p>
+    </div>
+}
+
+@if (Model.Schools > 0)
+{
+    <div class="col-md-12" style="background-color:moccasin">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Schools">
+                <h3>Apply for E-Learning Solution</h3>
+            </a>
+        </p>
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Schools">
+                <h3>Apply for SMIS Solution</h3>
+            </a>
+        </p>
+    </div>
+}
+
+@if (Model.Businesses > 0)
+{
+    <div class="col-md-12" style="background-color:lightcyan">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Businesses">
+                <h3>E-Commerce Application</h3>
+            </a>
+        </p>
+    </div>
+}

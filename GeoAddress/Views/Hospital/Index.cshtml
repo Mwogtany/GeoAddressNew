@@ -1,0 +1,101 @@
+﻿@model IEnumerable<GeoAddress.Models.HospViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+<h2>Geo-Addresses for Health Facilities</h2>
+
+<p>
+    @Html.ActionLink("Add a Facility", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pluscode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FacilityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Building)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Constituency_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sub_County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ward_Code)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pluscode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FacilityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Website)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Building)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.County_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Constituency_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sub_County_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ward_Code)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BaseID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BaseID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BaseID })
+            </td>
+        </tr>
+    }
+
+</table>
+

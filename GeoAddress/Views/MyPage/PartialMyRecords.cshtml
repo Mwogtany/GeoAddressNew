@@ -1,0 +1,61 @@
+﻿@model GeoAddress.Models.MyRecordsViewModel
+
+@if (Model.Farmers > 0)
+{
+    <div class="col-md-12" style="background-color:lightgreen">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Farmers">
+                @Model.Farmers
+                <h3>Farmers</h3>
+            </a>
+        </p>
+    </div>
+}
+
+@if (Model.Schools > 0)
+{
+    <div class="col-md-12" style="background-color:moccasin">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Schools">
+                @Model.Schools 
+                <h3>Schools</h3>
+            </a>
+        </p>
+    </div>
+}
+
+@if (Model.Hospitals > 0)
+{
+    <div class="col-md-12" style="background-color:lightblue">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Hospitals">
+                @Model.Hospitals
+                <h3>Health Centers</h3>
+            </a>
+        </p>
+    </div>
+}
+
+@if (Model.Households > 0)
+{
+    <div class="col-md-12" style="background-color:lightgoldenrodyellow">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Households">
+                @Model.Households
+                <h3>Households</h3>
+            </a>
+        </p>
+    </div>
+}
+
+@if (Model.Businesses > 0)
+{
+    <div class="col-md-12" style="background-color:lightcyan">
+        <p>
+            <a href="/@ViewData["ExtLocalPath"]MyPage/Businesses">
+                @Model.Businesses
+                <h3>Businesses</h3>
+            </a>
+        </p>
+    </div>
+}

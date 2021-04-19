@@ -1,0 +1,250 @@
+﻿@model GeoAddress.Models.FarmerViewModel8
+
+@{
+    ViewBag.Title = "Farm Holding";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        if ($('#ddlLanguage').val() != '3') {
+            $('.otherlang').hide();
+        }
+
+        $('#ddlLanguage').change(function () {
+            if ($(this).val() != '3') {
+                $('.otherlang').hide();
+            } else {
+                $('.otherlang').show();
+            }
+        });
+    });
+
+</script>
+@Html.Partial("PartialFarmerMenu")
+
+<h2>SECTION I & J: Land & Water Management and Financial & Services (Edit)</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-6">
+                <h4>SECTION I: LAND AND WATER MANAGEMENT</h4>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LandManagementPractices, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SelLandManagementPractices, Model.LandManagementPracticesList, "None Selected", new { @id = "DDLLmgt", @class = "form-control selmultiple", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.LandManagementPractices, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FertilizerTypeUsed, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SelFertilizerTypeUsed, Model.FertilizerTypeUsedList, "None Selected", new { @id = "DDLFertilizer", @class = "form-control selmultiple", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.FertilizerTypeUsed, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LimeOnSoil, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.LimeOnSoil, true) Yes
+                        @Html.RadioButtonFor(model => model.LimeOnSoil, false) No
+                        @Html.ValidationMessageFor(model => model.LimeOnSoil, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SoilTesting, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.SoilTesting, true) Yes
+                        @Html.RadioButtonFor(model => model.SoilTesting, false) No
+                        @Html.ValidationMessageFor(model => model.SoilTesting, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MainWaterSource, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.MainWaterSource, Model.MainWaterSourceList, "--Select--", new { @id = "ddlWaterSource", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MainWaterSource, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IrrigationDone, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.IrrigationDone, true) Yes
+                        @Html.RadioButtonFor(model => model.IrrigationDone, false) No
+                        @Html.ValidationMessageFor(model => model.IrrigationDone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeOfIrrigation, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.TypeOfIrrigation, Model.TypeOfIrrigationList, "--Select--", new { @id = "ddlIrrType", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeOfIrrigation, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TotalAreaIrrigated, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.TotalAreaIrrigated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TotalAreaIrrigated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeIrrigationProject, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.TypeIrrigationProject, Model.TypeIrrigationProjectList, "--Select--", new { @id = "ddlIrrProj", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeIrrigationProject, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IrrigationImplementedBy, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.IrrigationImplementedBy, Model.IrrigationImplementedByList, "--Select--", new { @id = "ddlIrrBody", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IrrigationImplementedBy, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4>SECTION J: FINANCIAL AND SERVICES</h4>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SourceFinancialLivehood, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SourceFinancialLivehood, Model.SourceFinancialLivehoodList, "--Select--", new { @id = "ddlLivelihoods", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SourceFinancialLivehood, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FarmerGroupAffiliate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SelFarmerGroupAffiliate, Model.FarmerGroupAffiliateList, "None Selected", new { @id = "DDLAffGroups", @class = "form-control selmultiple", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.FarmerGroupAffiliate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FinancialServices, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SelFinancialServices, Model.FinancialServicesList, "None Selected", new { @id = "DDLFinServices", @class = "form-control selmultiple", @multiple = "multiple" })
+                        @Html.ValidationMessageFor(model => model.FinancialServices, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InsureCrops, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.InsureCrops, true) Yes
+                        @Html.RadioButtonFor(model => model.InsureCrops, false) No
+                        @Html.ValidationMessageFor(model => model.InsureCrops, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InsureLivestock, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.InsureLivestock, true) Yes
+                        @Html.RadioButtonFor(model => model.InsureLivestock, false) No
+                        @Html.ValidationMessageFor(model => model.InsureLivestock, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InsureFarmAssets, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.InsureFarmAssets, true) Yes
+                        @Html.RadioButtonFor(model => model.InsureFarmAssets, false) No
+                        @Html.ValidationMessageFor(model => model.InsureFarmAssets, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KeepFarmRecords, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.KeepFarmRecords, true) Yes
+                        @Html.RadioButtonFor(model => model.KeepFarmRecords, false) No
+                        @Html.ValidationMessageFor(model => model.KeepFarmRecords, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SourceGAP, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.SourceGAP, Model.SourceGAPList, "--Select--", new { @id = "ddlSourceGAP", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SourceGAP, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MainExtensionProvider, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.MainExtensionProvider, Model.MainExtensionProviderList, "--Select--", new { @id = "ddlExtProvider", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MainExtensionProvider, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FormatForAdvisories, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.FormatForAdvisories, Model.FormatForAdvisoriesList, "--Select--", new { @id = "ddlFormatAdvisory", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FormatForAdvisories, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreferredTimeAdvisories, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.PreferredTimeAdvisories, Model.PreferredTimeAdvisoriesList, "--Select--", new { @id = "ddlTimeAdvisory", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreferredTimeAdvisories, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreferredLanguageAdvisories, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.PreferredLanguageAdvisories, Model.PreferredLanguageAdvisoriesList, "--Select--", new { @id = "ddlLanguage", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreferredLanguageAdvisories, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group otherlang">
+                    @Html.LabelFor(model => model.PreferredLanguageAdvisoriesOther, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.PreferredLanguageAdvisoriesOther, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreferredLanguageAdvisoriesOther, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <head runat="server">
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript">
+
+        $(function () {
+            $('.selmultiple').multiselect({
+                includeSelectAllOption: true,
+                selectAllValue: 'multiselect-all',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: '300',
+                buttonWidth: '235',
+            });
+        });
+
+        </script>
+    </head>
+}

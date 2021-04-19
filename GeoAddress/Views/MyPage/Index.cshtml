@@ -1,0 +1,42 @@
+﻿@using GeoAddress.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+    var mytop = (TopSummaryViewModel)ViewBag.MyTop;
+    var myrecs = (MyRecordsViewModel)ViewBag.MyRecs;
+}
+
+<h2>Services Accessed on this Portal</h2>
+<div class="row">
+    <p>
+        This platform allows you to capture information of your farm, household, school, hospital or business. Using any 
+        links above, you are able to capture your details. This platform allows you to place a service request to providers
+        i.e. as farmer you can request for veterinary services or hire a tractor / labour services, through services pre-defined for you. Once service 
+        provider registers in this platform, we expect infinite possibilities on solution provision and sharing for food security and 
+        improved lifelihood incomes in  our region. Most welcome as you use this platform!
+    </p>
+</div>
+<div class="row">
+    @Html.Partial("PartialTopSummary", mytop)
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <p>
+            <h3>My Views</h3>
+        </p>
+        @Html.Partial("PartialMyRecords", myrecs)
+    </div>
+
+    <div class="col-md-6">
+        <p>
+            <h3>Request a Service</h3>
+        </p>
+        @Html.Partial("PartialServiceRecords", myrecs)
+    </div>
+    <div class="col-md-3">
+        <p>
+            <h3>My Admin - Provide a Service</h3>
+        </p>
+        @Html.Partial("PartialAdmin", myrecs)
+    </div>
+</div>

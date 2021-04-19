@@ -1,0 +1,13 @@
+﻿@if (Session["id"] != null)
+{
+    <p>
+        @Html.ActionLink("SECTION A & B", "Edit", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION C & D", "IFarmHold", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION E", "IFarmCrop", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION F", "IFarmLivestock", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION G", "IFarmAquaculture", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION H", "IFarmEquipment", "Farmer", new { id = (int)Session["id"] }, null) ||
+        @Html.ActionLink("SECTION I & J", "IFarmLandWaterFinances", "Farmer", new { id = (int)Session["id"] }, null)
+    </p>
+}
+    

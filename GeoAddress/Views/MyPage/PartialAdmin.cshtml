@@ -1,0 +1,34 @@
+﻿@model GeoAddress.Models.MyRecordsViewModel
+@{
+    var mycurlist = Model.FarmersCurService;
+}
+<p>
+    @Html.ActionLink("Apply to Provide a Service", "NewProvideService", "MyPage", new { id = (int)Session["provservid"] }, null)
+</p>
+@if (Model.ActiveProvidedService > 0)
+{
+    string mactstring = Model.ActiveProvidedService.ToString() + " Active Service(s)";
+    <p>
+        @mactstring
+    </p>
+}
+else
+{
+    <p>
+        No Active Services to Provide
+    </p>
+}
+
+@if (Model.InActiveProvidedService > 0)
+{
+    string minactstring = Model.InActiveProvidedService.ToString() + " InActive Service(s)";
+    <p>
+        @minactstring
+    </p>
+}
+else
+{
+    <p>
+        No InActive Services Provided
+    </p>
+}

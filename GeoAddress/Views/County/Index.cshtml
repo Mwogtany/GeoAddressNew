@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GeoAddress.Models.COUNTY>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.County_Code)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.County_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.County_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.County_Code }) |
+            @Html.ActionLink("Details", "Details", new { id=item.County_Code }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.County_Code })
+        </td>
+    </tr>
+}
+
+</table>

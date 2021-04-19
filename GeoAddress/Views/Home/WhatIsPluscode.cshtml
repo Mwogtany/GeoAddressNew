@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "What is Pluscode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/wms.js"></script>
+<script src="~/Scripts/jquery.js"></script>
+
+<h2>What is Pluscode?</h2>
+<p>
+    Plus Codes just like street addresses, help one to get and use a 
+    simple digital address to locate areas of interest on Earth surface. 
+    It can also help one to define a specific location for a conventional address. 
+    For example, one can identify different entrances to the same building. 
+    One can also use Plus Codes to identify a specific location to receive 
+    deliveries, access emergency and social services, or direct people to 
+    a location. Since the codes are simple, you can easily share them with others.
+    <br /><br />
+    Plus Codes are based on latitude and longitude by use of a simple 
+    grid system and a set of 20 alphanumeric characters. The character 
+    list purposely excludes easy to confuse characters like "1" or "l."
+    <br /><br />
+    This Plus Codes Programme activity aims at setting up appropriate 
+    infrastructure to support use of Google PlusCodes (integral with GPS 
+    coordinates) in guiding the development agenda of a County, indeed a 
+    solution that cuts across all departments.
+</p>
+<strong>Generator of Plus Code</strong>
+<table>
+    <tr><td>Latitude</td><td>Longitude</td><td>Plus Code</td><td>Google Addresses</td></tr>
+    <tr><td><input id="txtLat" type="text" /></td><td><input id="txtLong" type="text" /></td><td><input id="txtPlus" type="text" readonly="readonly" /></td><td><input id="txtAdd" type="text" readonly="readonly" /></td></tr>
+</table>
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#txtLat').change(function () {
+                    var lat = $(this).val();
+                    var lng = document.getElementById('txtLong').value;
+                    //Use Google API to retrieve PlusCodes
+                    var myObj, x, txt = "";
+                    //var actionUrl = 'https://plus.codes/api?address=' + lat+ ',' + lng + '&email=mwogtany@gmail.com';
+                    var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                    $.getJSON(actionUrl, function (response) {
+                        if (response != null) {
+                            var x = 0;
+                            $.each(response, function (key, value) {
+                                if (value.global_code != null) {
+                                    document.getElementById('txtPlus').value = value.global_code;
+                                }
+                                if (value.compound_code != null) {
+                                    document.getElementById('txtAdd').value = value.compound_code;
+                                }
+                            });
+
+                        }
+                    });
+                });
+
+                $('#txtLong').change(function () {
+                    var lng = $(this).val();
+                    var lat = document.getElementById('txtLat').value;
+                    //Use Google API to retrieve PlusCodes
+                    var myObj, x, txt = "";
+                    var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lng + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                    $.getJSON(actionUrl, function (response) {
+                        if (response != null) {
+                            var x = 0;
+                            $.each(response, function (key, value) {
+                                if (value.global_code != null) {
+                                    document.getElementById('txtPlus').value = value.global_code;
+                                }
+                                if (value.compound_code != null) {
+                                    document.getElementById('txtAdd').value = value.compound_code;
+                                }
+                            });
+
+                        }
+                    });
+                });
+            });
+</script>
+

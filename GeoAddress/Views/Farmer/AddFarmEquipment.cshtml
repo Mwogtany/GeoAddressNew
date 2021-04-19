@@ -1,0 +1,122 @@
+﻿@model GeoAddress.Models.FarmerEquipmentViewModel
+@{
+    ViewBag.Title = "Add Farm Equipment/ Machinery";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootbox.all.min.js"></script>
+<h2>Add Equipment / Machinery</h2>
+@Html.ActionLink("Back", "IFarmEquipment", "Farmer", new { id = (int)Session["id"] }, null)
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="mymessage text-success"></div>
+        @if (ViewBag.Message != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message</div>
+            </p>}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.BaseID)
+                        @Html.LabelFor(model => model.EquipID, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.EquipID, Model.Equipmentlist, "--Select--", new { @id = "ddlEquip", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.EquipID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <p>
+                <h4>EQUIPMENT/MACHINERY IN THE FARM</h4>
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Equipment</th>
+                        <th>Qauntity</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (@Model.FarmerEquipmentlist != null)
+                    {
+                        foreach (var item in Model.FarmerEquipmentlist)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <th scope="row">@item.EquipID</th>
+                                    <td>@item.Equipment</td>
+                                    <td>@item.Qty</td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "AddFarmEquipment", "Farmer", new { id = item.EquipID }, null)
+                                        <a href="#" onclick="deleteSession(@item.EquipID)" id="btnDelete" data-target="#deleteModal" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            Page Information Here<<Page 1>>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <script type="text/javascript" language="javascript">
+        function deleteSession(id) {
+            bootbox.confirm("Are you sure you want to delete Equipment/Machinery ID: " + id + "?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DelFarmEquipment", "Farmer")",
+                        type: 'POST',
+                        data: JSON.stringify({ id: id }), //small letter id, same as in controller parameter
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (customer) {
+                            if (customer != null) {
+                                window.location.href = '/Farmer/AddFarmEquipment/0'
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,192 @@
+﻿@model GeoAddress.Models.NewServiceViewModel
+
+@{
+    ViewBag.Title = "New Farmer Service";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+<h2>New/Edit Farmer Service</h2>
+
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootbox.all.min.js"></script>
+@Html.ActionLink("Back", "Index", "MyPage")
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="mymessage text-success"></div>
+        @if (ViewBag.Message != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message</div>
+            </p>}
+        @if (ViewBag.Message2 != "")
+        {
+            <p>
+                <div class="text-success">@ViewBag.Message2</div>
+            </p>}
+
+                @Html.HiddenFor(x => x.BaseID)
+                @Html.HiddenFor(x => x.ServiceRunID)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.CategoryID, Model.CategoryList, "--Select--", new { @id = "ddlCategory", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ServiceID, htmlAttributes: new { @class = "control-label col-md-6" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(model => model.ServiceID, Model.ServiceList, "--Select--", new { @id = "ddlService", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ServiceID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label text-left col-md-6" })
+                    <div class="col-md-6">
+                        @Html.TextAreaFor(model => model.Description, 5, 45, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="SAVE" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <p>
+            <h4>CURRENT SERVICES</h4>
+        </p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Service</th>
+                    <th>Issue</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (@Model.FarmerCurServiceList != null)
+                {
+                    foreach (var item in Model.FarmerCurServiceList)
+                    {
+                        if (item != null)
+                        {
+                            <tr>
+                                <th scope="row">@item.ServiceRunID</th>
+                                <td>@item.CategoryDescription</td>
+                                <td>@item.ServiceDescription</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "NewFarmerService", "MyPage", new { id = item.ServiceRunID }, null)
+                                    <a href="#" onclick="deleteSession(@item.ServiceRunID)" id="btnDelete" data-target="#deleteModal" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        Page Information Here<<Page 1>>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$.getJSON("../../api/Cascade/FarmerServiceCategories",
+            //            function (classesData) {
+            //                var select = $("#ddlCategory");
+            //                select.empty();
+            //                select.append($('<option/>', {
+            //                    value: 0,
+            //                    text: "<<Select Service>>"
+            //                }));
+            //                $.each(classesData, function (index, itemData) {
+            //                    select.append($('<option/>', {
+            //                        value: itemData.id,
+            //                        text: itemData.Description
+            //                    }));
+            //                });
+            //            });
+
+                $('#ddlCategory').change(function () {
+                    var selcategory = $(this).val();
+                    $.getJSON("../../api/Cascade/FarmerServices/" + selcategory,
+                        function (classesData) {
+                            var select = $("#ddlService");
+                            select.empty();
+                            select.append($('<option/>', {
+                                value: 0,
+                                text: "<<Select Service>>"
+                            }));
+                            $.each(classesData, function (index, itemData) {
+                                select.append($('<option/>', {
+                                    value: itemData.id,
+                                    text: itemData.Description
+                                }));
+                            });
+                        });
+                });
+
+            });
+
+        function deleteSession(stid) {
+            bootbox.confirm("Are you sure you want to delete Farmer Service ID: " + stid + "?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "@Url.Action("DelFarmerService", "MyPage")",
+                        type: 'POST',
+                        data: JSON.stringify({ id: stid }), //small letter id, same as in controller parameter
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (customer) {
+                            if (customer != null) {
+                                window.location.href = '/MyPage/NewFarmerService/0'
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }
+
+        //$(".delete-it").click(function () {
+        //    var id = $(this).data('id');
+        //    bootbox.confirm("Are you sure?", function (result) {
+        //        if (result){
+        //            window.location = '/MyPage/DelFarmerService/' + id;
+        //        }
+        //    });
+        //});
+
+    </script>
+}

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<GeoAddress.Models.FarmerViewModel>
+
+@{
+    ViewBag.Title = "Farmers";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+    var i = 1;
+}
+
+<h2>Farmers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            ##
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HouseHoldName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sub_County_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Constituency_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ward_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Village)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoWorkers)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var mid = item.BaseID.ToString();
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HouseHoldName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.TypeID)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ItemID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.County_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sub_County_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Constituency_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ward_Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Village)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoWorkers)
+            </td>
+            <td>
+                <a href="/@ViewData["ExtLocalPath"]Farmer/Edit/@mid"> 
+                    Edit
+                </a> |
+                    @Html.ActionLink("Details", "Details", new { id = item.BaseID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BaseID })
+</td>
+        </tr>
+        i++;
+    }
+
+</table>
+

@@ -1,0 +1,697 @@
+﻿@model GeoAddress.Models.HospViewModel2
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ"></script>
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Content/wms.js"></script>
+<script type="text/javascript">
+    function geoFindMe() {
+      var status = document.querySelector('#status');
+      var mapLink = document.querySelector('#map-link');
+
+        mapLink.href = '';
+        mapLink.textContent = '';
+
+        function success(position) {
+          var latitude  = position.coords.latitude;
+          var longitude = position.coords.longitude;
+
+            status.textContent = '';
+            mapLink.href = 'https://www.openstreetmap.org/#map=18/${latitude}/${longitude}';
+            mapLink.textContent = 'Latitude: ${latitude} °, Longitude: ${longitude} °';
+        }
+
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        if(!navigator.geolocation) {
+            status.textContent = 'Geolocation is not supported by your browser';
+        } else {
+            status.textContent = 'Locating…';
+            navigator.geolocation.getCurrentPosition(success, error);
+        }
+
+    }
+
+
+    //**************************************************************************************************
+    //document.querySelector('#find-me').addEventListener('click', geoFindMe);
+    //function getLocation() {
+    //    if (navigator.geolocation) {
+    //        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    //    }
+    //    else { x.innerHTML = "Geolocation is not supported by this browser."; }
+    //}
+
+    //function showPosition(position) {
+    //    var latlondata =  position.coords.latitude + "," +position.coords.longitude;
+    //    var latlon = "Your Latitude Position is:=" + position.coords.latitude + "," + "Your Longitude Position is:="  +position.coords.longitude;
+    //    y.innerHTML(latlon)
+    //    var img_url = "http://maps.googleapis.com/maps/api/staticmap?center="
+    //        + latlondata + "&zoom=14&size=400x300&sensor=false";
+    //    x.innerHTML = "<img src='" + img_url + "' />";
+    //}
+    //function showError(error) {
+    //    if (error.code == 1) {
+    //        y.innerHTML = "User denied the request for Geolocation."
+    //    }
+    //    else if (err.code == 2) {
+    //        y.innerHTML = "Location information is unavailable."
+    //    }
+    //    else if (err.code == 3) {
+    //        y.innerHTML = "The request to get user location timed out."
+    //    }
+    //    else {
+    //        y.innerHTML = "An unknown error occurred."
+    //    }
+    //}
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success);
+    } else {
+        alert("Geo Location is not supported on your current browser!");
+    }
+
+    function success(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(longitude, latitude)
+        });
+
+        var city = position.coords.locality;
+        var myLatlng = new google.maps.LatLng(latitude, longitude);
+        var myOptions = {
+            center: myLatlng,
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "lat: " + latitude + " long: " + longitude
+        });
+
+        document.getElementById('Latitude').value = latitude;
+        document.getElementById('Longitude').value = longitude;
+        //Use Google API to retrieve PlusCodes
+        var myObj, x, txt = "";
+        //var actionUrl = 'https://plus.codes/api?address=' + latitude + ',' + longitude + '&email=mwogtany@gmail.com';
+        var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+        $.getJSON(actionUrl, function (response) {
+            if (response != null) {
+                var x = 0;
+                $.each(response, function (key, value) {
+                    if (value.global_code != null) {
+                        document.getElementById('Pluscode').value = value.global_code;
+                    }
+                    if (value.compound_code != null) {
+                        document.getElementById('Address').value = value.compound_code;
+                    }
+                });
+
+            }
+        });
+
+        //var mEmpty = "";
+        marker.setMap(map);
+        var infowindow = new google.maps.InfoWindow({ content: "<b>Current Address</b><br/> Latitude:" + latitude + "<br /> Longitude:" + longitude + "" });
+        infowindow.open(map, marker);
+
+        //*********************************************************************************************************************
+
+    }
+    // 2*********************************************************************************************************************
+    //window.onload = function () {
+    //var xlat = document.getElementById('<%=Latitude.ClientID%>').value;
+    //var ylong = document.getElementById('<%=Longitude.ClientID%>').value;
+
+    //alert("Latitude: " + xlat + "\r\nLongitude: " + ylong);
+    //    var myLatlng = new google.maps.LatLng(xlat, ylong);
+    //    var mapOptions = {
+    //        center: new google.maps.LatLng(xlat, ylong),
+    //        zoom: 14,
+    //        mapTypeId: google.maps.MapTypeId.ROADMAP
+    //    };
+    //   var infoWindow = new google.maps.InfoWindow();
+    //    var latlngbounds = new google.maps.LatLngBounds();
+    //    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    //    google.maps.event.addListener(map, 'click', function (e) {
+    //        alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
+    //    });
+    //    var marker = new google.maps.Marker({
+    //        position: myLatlng,
+    //        title: "lat: " + xlat + " long: " + ylong
+    //    });
+    //    marker.setMap(map);
+    //    var infowindow = new google.maps.InfoWindow({ content: "<b>School</b><br/> Latitude:" + xlat + "<br /> Longitude:" + ylong + "" });
+    //    infowindow.open(map, marker);
+    //}
+    //************************************************************************************************************************
+    var map;
+        var infowindow = null;
+        var allowedZoomLevel = 6;
+        var allowedMapBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(5.2852443672086515, 42.036873727280614),     //Map boundaries of Kenya approximately
+                new google.maps.LatLng(-5.107266569317371, 33.621346383530614)
+            );
+
+        function initMap() {
+            //Enabling new cartography and themes
+            var xlat = document.getElementById('Latitude').value;
+            var ylong = document.getElementById('Longitude').value;
+            var lat = null;
+            var lng = null;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                    //map.setCenter(pos);
+                    if (infowindow != null)
+                        infowindow.close();
+                    infowindow = new google.maps.InfoWindow({
+                        content: '<b>Current Location : </b><br><b>Latitude : </b>' + pos.lat + '<br><b>Longitude: </b>' + pos.lng,
+                        position: pos
+                    });
+                    infowindow.open(map, marker);
+
+                    document.getElementById('Latitude').value = pos.lat;
+                    document.getElementById('Longitude').value = pos.lng;
+                    //Use Google API to retrieve PlusCodes
+                    var myObj, x, txt = "";
+                    //var actionUrl = 'https://plus.codes/api?address=' + pos.lat + ',' + pos.lng + '&email=mwogtany@gmail.com';
+                    var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                    $.getJSON(actionUrl, function (response) {
+                        if (response != null) {
+                            var x = 0;
+                            $.each(response, function (key, value) {
+                                if (value.global_code != null) {
+                                    document.getElementById('Pluscode').value = value.global_code;
+                                }
+                                if (value.compound_code != null) {
+                                    document.getElementById('Address').value = value.compound_code;
+                                }
+                            });
+
+                        }
+                    });
+                });
+            }
+
+            var mEmpty = "";
+            if (xlat == "" || xlat == null || xlat == 'null' || xlat == 'none' || xlat == 'n/a' || xlat == 'N/A' || xlat == '-') {
+                if (lat == "" || lat == null) {
+                    xlat = -1.289802
+                    ylong = 36.825629711
+                }
+                else {
+                    xlat = lat;
+                    ylong = lng;
+                }
+                mEmpty = "x";
+            }
+
+            google.maps.visualRefresh = true;
+            //Setting starting options of map
+            var mapOptions = {
+                center: new google.maps.LatLng(xlat, ylong),
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+                //mapTypeId: google.maps.MapTypeId.SATELLITE
+                //mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            //Getting map DOM element
+            var mapElement = document.getElementById('map_canvas');
+            //Creating a map with DOM element which is just
+            //obtained
+            map = new google.maps.Map(mapElement, mapOptions);
+
+            var wmsOptions = {
+                baseUrl:'http://demo.cubewerx.com/cubewerx/cubeserv.cgi?',
+                layers: 'Foundation.gtopo30',
+                version: '1.1.1',
+                styles: 'default',
+                format: 'image/png'
+            };
+
+            google.maps.event.addListener(map, 'click', function (e) {
+                //alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
+                if (mEmpty != "") {
+                    document.getElementById('Latitude').value = e.latLng.lat();
+                    document.getElementById('Longitude').value = e.latLng.lng();
+                    //Use Google API to retrieve PlusCodes
+                    var myObj, x, txt = "";
+                    //var actionUrl = 'https://plus.codes/api?address=' + e.latLng.lat() + ',' + e.latLng.lng() + '&email=mwogtany@gmail.com';
+                    var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + e.latLng.lat() + ',' + e.latLng.lng() + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                    $.getJSON(actionUrl, function (response) {
+                        if (response != null) {
+                            var x = 0;
+                            $.each(response, function (key, value) {
+                                if (value.global_code != null) {
+                                    document.getElementById('Pluscode').value = value.global_code;
+                                }
+                                if (value.compound_code != null) {
+                                    document.getElementById('Address').value = value.compound_code;
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+            google.maps.event.addListener(map, 'click', function (e) {
+                if (infowindow != null)
+                    infowindow.close();
+                infowindow = new google.maps.InfoWindow({
+                    content: '<b>Mouse Coordinates : </b><br><b>Latitude : </b>' + e.latLng.lat() + '<br><b>Longitude: </b>' + e.latLng.lng(),
+                    position: e.latLng
+                });
+                document.getElementById('Latitude').value = e.latLng.lat();
+                document.getElementById('Longitude').value = e.latLng.lng();
+                //Use Google API to retrieve PlusCodes
+                var myObj, x, txt = "";
+                //var actionUrl = 'https://plus.codes/api?address=' + e.latLng.lat() + ',' + e.latLng.lng() + '&email=mwogtany@gmail.com';
+                var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + e.latLng.lat() + ',' + e.latLng.lng() + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                $.getJSON(actionUrl, function (response) {
+                    if (response != null) {
+                        var x = 0;
+                        $.each(response, function (key, value) {
+                            if (value.global_code != null) {
+                                document.getElementById('Pluscode').value = value.global_code;
+                            }
+                            if (value.compound_code != null) {
+                                document.getElementById('Address').value = value.compound_code;
+                            }
+                        });
+
+                    }
+                });
+
+                infowindow.open(map);
+            });
+
+            google.maps.event.addListener(map, 'drag', checkBounds);
+            google.maps.event.addListener(map, 'zoom_changed',checkBounds);
+
+            startButtonEvents();
+            var myLatlng = new google.maps.LatLng(xlat, ylong);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                title: "lat: " + xlat + " long: " + ylong
+            });
+
+            //marker.setMap(map);
+            //var infowindow = new google.maps.InfoWindow({ content: "<b>School</b><br/> Latitude:" + xlat + "<br /> Longitude:" + ylong + "" });
+            //infowindow.open(map, marker);
+            if (mEmpty == "") {
+                marker.setMap(map);
+                var infowindow = new google.maps.InfoWindow({ content: "<b>Address</b><br/> Latitude:" + xlat + "<br /> Longitude:" + ylong + "" });
+                infowindow.open(map, marker);
+            }
+            else {
+                marker.setMap(map);
+                var infowindow = new google.maps.InfoWindow({ content: "<b>Current Address</b><br/> Latitude:" + xlat + "<br /> Longitude:" + ylong + "" });
+                infowindow.open(map, marker);
+            }
+
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Marker Info Window – ID : ' + marker });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+
+            //const locationButton = document.createElement("button");
+            const locationButton = document.getElementById('findme');
+            locationButton.textContent = "Pan to Current Location";
+            locationButton.classList.add("custom-map-control-button");
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+              locationButton
+            );
+
+            locationButton.addEventListener("click", (event) => {
+                // Try HTML5 geolocation.
+                event.preventDefault();
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                      (position) => {
+                          const pos = {
+                              lat: position.coords.latitude,
+                              lng: position.coords.longitude,
+                          };
+
+                          //infoWindow.setPosition(pos);
+                          //infoWindow.setContent("Location found.");
+                          //infoWindow.open(map);
+
+                          //map.setCenter(pos);
+                          if (infowindow != null)
+                              infowindow.close();
+                          infowindow = new google.maps.InfoWindow({
+                              content: '<b>Current Location : </b><br><b>Latitude : </b>' + pos.lat + '<br><b>Longitude: </b>' + pos.lng,
+                              position: pos
+                          });
+                          infowindow.open(map, marker);
+
+                          document.getElementById('Latitude').value = pos.lat;
+                          document.getElementById('Longitude').value = pos.lng;
+                          //Use Google API to retrieve PlusCodes
+                          var myObj, x, txt = "";
+                          //var actionUrl = 'https://plus.codes/api?address=' + pos.lat + ',' + pos.lng + '&email=mwogtany@gmail.com';
+                          var actionUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.lat + ',' + pos.lng + '&key=AIzaSyA5uJ8WtZCj9qCSm8Qnow01TJR3H8A6mHQ';
+                          $.getJSON(actionUrl, function (response) {
+                              if (response != null) {
+                                  var x = 0;
+                                  $.each(response, function (key, value) {
+                                      if (value.global_code != null) {
+                                          document.getElementById('Pluscode').value = value.global_code;
+                                      }
+                                      if (value.compound_code != null) {
+                                          document.getElementById('Address').value = value.compound_code;
+                                      }
+                                  });
+
+                              }
+                          });
+                      },
+                      () => {
+                          handleLocationError(true, infoWindow, map.getCenter());
+                      }
+                    );
+                } else {
+                    // Browser doesn't support Geolocation
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            });
+        }
+
+        function checkBounds() {
+            if (map.getZoom() < allowedZoomLevel)
+                map.setZoom(allowedZoomLevel);
+
+            //if (allowedMapBounds) {
+            //    var allowedNELng = allowedMapBounds.getNorthEast().lng();
+            //    var allowedNELat = allowedMapBounds.getNorthEast().lat();
+            //    var allowedSWLng = allowedMapBounds.getSouthWest().lng();
+            //    var allowedSWLat = allowedMapBounds.getSouthWest().lat();
+            //    var recentBounds = map.getBounds();
+            //    var recentNELng = recentBounds.getNorthEast().lng();
+            //    var recentNELat = recentBounds.getNorthEast().lat();
+            //    var recentSWLng = recentBounds.getSouthWest().lng();
+            //    var recentSWLat = recentBounds.getSouthWest().lat();
+            //    var recentCenter = map.getCenter();
+            //    var centerX = recentCenter.lng();
+            //    var centerY = recentCenter.lat();
+            //    var nCenterX = centerX;
+            //    var nCenterY = centerY;
+
+            //    if (recentNELng > allowedNELng) centerX = centerX -(recentNELng - allowedNELng);
+            //    if (recentNELat > allowedNELat) centerY = centerY -(recentNELat - allowedNELat);
+            //    if (recentSWLng < allowedSWLng) centerX = centerX + (allowedSWLng - recentSWLng);
+            //    if (recentSWLat < allowedSWLat) centerY = centerY + (allowedSWLat - recentSWLat);
+            //    if (nCenterX != centerX || nCenterY != centerY) {
+            //        map.panTo(new google.maps.LatLng(centerY, centerX));
+            //    }
+            //    else {
+            //        return;
+            //    }
+            //}
+        }
+
+        function startButtonEvents() {
+            document.getElementById('addStandardMarker').
+            addEventListener('click', function () {
+                addStandardMarker();
+            });
+            document.getElementById('addIconMarker').
+            addEventListener('click', function () {
+                addIconMarker();
+            });
+        }
+
+        function startButtonEvents() {
+            document.getElementById('btnRoad'
+            ).addEventListener('click', function () {
+                map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+            });
+            document.getElementById('btnSat'
+            ).addEventListener('click', function () {
+                map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+            });
+            document.getElementById('btnHyb'
+            ).addEventListener('click', function () {
+                map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+            });
+            document.getElementById('btnTer'
+            ).addEventListener('click', function () {
+                map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+            });
+        }
+
+        function createRandomLatLng() {
+            var deltaLat = maxLat - minLat;
+            var deltaLng = maxLng - minLng;
+            var rndNumLat = Math.random();
+            var newLat = minLat + rndNumLat * deltaLat;
+            var rndNumLng = Math.random();
+            var newLng = minLng + rndNumLng * deltaLng;
+            return new google.maps.LatLng(newLat, newLng);
+        }
+
+        function addStandardMarker() {
+            var coordinate = createRandomLatLng();
+            var marker = new google.maps.Marker({
+                position: coordinate,
+                map: map,
+                title: 'Random Marker - ' + markerId
+            });
+            // If you don't specify a Map during the initialization
+            //of the Marker you can add it later using the line
+            //below
+            //marker.setMap(map);
+            markerId++;
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+</script>
+<h2>Health Facility Detail (New)</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Add New Health Facility</h4>
+        <hr />
+        <div class="col-md-6">
+            <button id="findme">Show my location</button><br />
+            <input id="btnRoad" type="button" value="RoadMap">
+            <input id="btnSat" type="button" value="Satellite">
+            <input id="btnHyb" type="button" value="Hybrid">
+            <input id="btnTer" type="button" value="Terrain">
+            <a id="addStandardMarker" href="#">Add Standard Marker</a>
+            <a id="addIconMarker" href="#">Add Icon Marker</a>
+            <div id="map_canvas" style="width: 100%; height: 550px">
+            </div>
+        </div>
+        <div class="col-md-6">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Longitude, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pluscode, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Pluscode, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Pluscode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FacilityName, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.FacilityName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FacilityName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactPhone, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ContactPhone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ContactPhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ContactEmail, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ContactEmail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ContactEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Website, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Building, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Building, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Building, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Level_ID, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Level_ID, Model.Levels, "--Select--", new { @id = "ddlLevels", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Level_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.County_Code, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.County_Code, Model.CountyNames, "--Select--", new { @id = "ddlCty", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.County_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Constituency_Code, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Constituency_Code, Model.Constituencies, "--Select--", new { @id = "ddlCons", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Constituency_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Sub_County_Code, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Sub_County_Code, Model.SubCountyNames, "--Select--", new { @id = "ddlSCty", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Sub_County_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ward_Code, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Ward_Code, Model.Wards, "--Select--", new { @id = "ddlWards", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Ward_Code, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="SAVE" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#ddlCty').change(function () {
+                    var selcounty = $(this).val();
+                    $.getJSON("../api/Cascade/SubCounties/" + selcounty,
+                        function (classesData) {
+                            var select = $("#ddlSCty");
+                            select.empty();
+                            select.append($('<option/>', {
+                                value: 0,
+                                text: "<<Select Sub-County>>"
+                            }));
+                            $.each(classesData, function (index, itemData) {
+                                select.append($('<option/>', {
+                                    value: itemData.Sub_County_Code,
+                                    text: itemData.Sub_County_Name
+                                }));
+                            });
+                        });
+
+                    $.getJSON("../api/Cascade/Constituencies/" + selcounty,
+                        function (classesData) {
+                            var select = $("#ddlCons");
+                            select.empty();
+                            select.append($('<option/>', {
+                                value: 0,
+                                text: "<<Select Constituency>>"
+                            }));
+                            $.each(classesData, function (index, itemData) {
+                                select.append($('<option/>', {
+                                    value: itemData.Constituency_Code,
+                                    text: itemData.Constituency_Name
+                                }));
+                            });
+                        });
+
+                    var select = $("#ddlWards");
+                    select.empty();
+                    select.append($('<option/>', {
+                        value: 0,
+                        text: "<<Select Ward>>"
+                    }));
+                });
+
+                $('#ddlCons').change(function () {
+                    var selcounty = $(this).val();
+                    $.getJSON("../api/Cascade/Wards/" + selcounty,
+                        function (classesData) {
+                            var select = $("#ddlWards");
+                            select.empty();
+                            select.append($('<option/>', {
+                                value: 0,
+                                text: "<<Select Ward>>"
+                            }));
+                            $.each(classesData, function (index, itemData) {
+                                select.append($('<option/>', {
+                                    value: itemData.Ward_Code,
+                                    text: itemData.Ward_Name
+                                }));
+                            });
+                        });
+                });
+
+            });
+        </script>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

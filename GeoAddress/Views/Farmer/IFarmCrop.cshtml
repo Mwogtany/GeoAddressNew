@@ -1,0 +1,209 @@
+﻿@model GeoAddress.Models.FarmerViewModel4
+
+@{
+    ViewBag.Title = "Farm Crops";
+    Layout = "~/Views/Shared/_LayoutMyPage.cshtml";
+}
+
+@Html.Partial("PartialFarmerMenu")
+
+<h2>SECTION E: CROP ACRICULTURE (Edit)</h2>
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (ViewBag.Message != "")
+            {
+                <p>
+                    <div class="text-success">@ViewBag.Message</div>
+                </p>}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CropProductionSystem, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelCropProdSystemList, Model.CropProdSystemList, "None Selected", new { @id = "DDLProdSys", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.CropProductionSystem, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CropAcreage, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.CropAcreage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CropAcreage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CropAverageAcreYield, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.CropAverageAcreYield, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CropAverageAcreYield, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DateCropdPlanted, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.DateCropdPlanted, new { htmlAttributes = new { @class = "datepicker" } })
+                            @Html.ValidationMessageFor(model => model.DateCropdPlanted, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VarietyOfCrop, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.VarietyOfCrop, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.VarietyOfCrop, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SupportOtherCrops, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.RadioButtonFor(model => model.SupportOtherCrops, true) Yes
+                            @Html.RadioButtonFor(model => model.SupportOtherCrops, false) No
+                            @Html.ValidationMessageFor(model => model.SupportOtherCrops, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UseFertilizer, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.RadioButtonFor(model => model.UseFertilizer, true) Yes
+                            @Html.RadioButtonFor(model => model.UseFertilizer, false) No
+                            @Html.ValidationMessageFor(model => model.UseFertilizer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FertilizerUse, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelFertilizerList, Model.FertilizerList, "None Selected", new { @id = "DDLFertilizers", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.FertilizerUse, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AverageFertilizerUse, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.AverageFertilizerUse, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AverageFertilizerUse, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PlaceFertilizerSourced, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.PlaceFertilizerSourced, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PlaceFertilizerSourced, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FertilizerSourceDistince, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.FertilizerSourceDistince, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FertilizerSourceDistince, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.CropChemicalUse, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.CropChemicalUse, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.CropChemicalUse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CropChemicalUse, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelCropChemicalUseList, Model.CropChemicalUseList, "None Selected", new { @id = "DDLChemUse", @class = "form-control selmultiple", @multiple = "multiple" })
+                            @Html.ValidationMessageFor(model => model.CropChemicalUse, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(model => model.CropChemicalUse, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-8">
+                                @Html.ListBoxFor(m => m.SelCropChemicalUseList, Model.CropChemicalUseList)
+                                @Html.ValidationMessageFor(model => model.CropChemicalUse, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="SAVE" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    <p>
+        @Html.ActionLink("Add / Edit Crop", "AddCrop", "Farmer", new { id = 0 }, null)
+    </p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Crop ID</th>
+                <th>Name</th>
+                <th>Acreage</th>
+                <th>Purpose</th>
+                <th>Water Source</th>
+                <th>Seeds</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (@Model.Crops != null)
+            {
+                foreach (var item in Model.Crops)
+                {
+                    if (item != null)
+                    {
+                        <tr>
+                            <th scope="row">@item.CropID</th>
+                            <td>@item.CropDescription</td>
+                            <td>@item.Acreage</td>
+                            <td>@item.Purpose</td>
+                            <td>@item.WaterSource</td>
+                            <td>@item.Seeds</td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    Page Information Here<<Page 1>>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <head runat="server">
+        <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-multiselect.js"></script>
+        <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+        <script type="text/javascript">
+
+        $(function () {
+            $('.selmultiple').multiselect({
+                includeSelectAllOption: true,
+                selectAllValue: 'multiselect-all',
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: '300',
+                buttonWidth: '235',
+            });
+        });
+
+        </script>
+    </head>
+}
